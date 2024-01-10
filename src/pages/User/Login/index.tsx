@@ -13,6 +13,7 @@ import {
   ProFormCaptcha,
   ProFormCheckbox,
   ProFormText,
+  useFetchData,
 } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
@@ -20,6 +21,8 @@ import { Alert, message, Tabs } from 'antd';
 import Settings from '../../../../config/defaultSettings';
 import React, { useState } from 'react';
 import { userLoginUsingPost } from '@/services/api-platform/userController';
+import { getInitialState } from '@/app';
+import { flushSync } from 'react-dom';
 
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -110,8 +113,10 @@ const Login: React.FC = () => {
           defaultMessage: '登录成功！',
         });
         message.success(defaultLoginSuccessMessage);
-        setInitialState({
-          loginUser: res.data
+        flushSync(() => {
+          setInitialState({
+            loginUser: res?.data
+          })
         })
         const urlParams = new URL(window.location.href).searchParams;
         if (urlParams.get('redirect') == '/user/login') {

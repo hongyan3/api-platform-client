@@ -29,6 +29,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponsePageUserVO = {
+    code?: number;
+    data?: PageUserVO;
+    message?: string;
+  };
+
   type BaseResponsestring = {
     code?: number;
     data?: string;
@@ -41,51 +47,34 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseUserCredentialsVO = {
+    code?: number;
+    data?: UserCredentialsVO;
+    message?: string;
+  };
+
   type BaseResponseUserVO = {
     code?: number;
     data?: UserVO;
     message?: string;
   };
 
-  type DeleteRequest = {
-    id?: string;
+  type deleteInterfaceInfoUsingDELETEParams = {
+    /** interfaceId */
+    interfaceId: string;
   };
 
-  type getInterfaceInfoVOByIdUsingGETParams = {
-    /** id */
-    id: string;
+  type deleteUserUsingDELETEParams = {
+    /** userId */
+    userId: string;
   };
 
-  type getUserByIdUsingGETParams = {
-    /** id */
-    id: string;
+  type getInterfaceInfoByIdUsingGETParams = {
+    /** interfaceId */
+    interfaceId: string;
   };
 
-  type InterfaceInfoAddRequest = {
-    description?: string;
-    id?: string;
-    method?: string;
-    name?: string;
-    requestHeader?: string;
-    requestParams?: string;
-    responseHeader?: string;
-    url?: string;
-    userId?: string;
-  };
-
-  type InterfaceInfoEditRequest = {
-    description?: string;
-    id?: string;
-    method?: string;
-    name?: string;
-    requestHeader?: string;
-    requestParams?: string;
-    responseHeader?: string;
-    status?: number;
-    url?: string;
-  };
-
-  type InterfaceInfoQueryRequest = {
+  type getInterfaceInfoListUsingGET1Params = {
     current?: string;
     description?: string;
     id?: string;
@@ -100,6 +89,45 @@ declare namespace API {
     status?: number;
     url?: string;
     userId?: string;
+  };
+
+  type getInterfaceInfoListUsingGETParams = {
+    current?: string;
+    description?: string;
+    id?: string;
+    method?: string;
+    name?: string;
+    pageSize?: string;
+    requestHeader?: string;
+    requestParams?: string;
+    responseHeader?: string;
+    sortField?: string;
+    sortOrder?: string;
+    status?: number;
+    url?: string;
+    userId?: string;
+  };
+
+  type getUserByIdUsingGETParams = {
+    /** userId */
+    userId: string;
+  };
+
+  type InterfaceInfoAddRequest = {
+    description?: string;
+    id?: string;
+    method?: string;
+    name?: string;
+    requestHeader?: string;
+    requestParams?: string;
+    responseHeader?: string;
+    url?: string;
+    userId?: string;
+  };
+
+  type InterfaceInfoInvokeRequest = {
+    id?: string;
+    requestParams?: string;
   };
 
   type InterfaceInfoUpdateRequest = {
@@ -208,6 +236,16 @@ declare namespace API {
     viewName?: string;
   };
 
+  type offlineInterfaceInfoUsingPUTParams = {
+    /** interfaceId */
+    interfaceId: string;
+  };
+
+  type onlineInterfaceInfoUsingPUTParams = {
+    /** interfaceId */
+    interfaceId: string;
+  };
+
   type OrderItem = {
     asc?: boolean;
     column?: string;
@@ -239,17 +277,32 @@ declare namespace API {
     total?: string;
   };
 
+  type PageUserVO = {
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: UserVO[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
+
   type UploadFileUsingPOSTParams = {
     business?: string;
   };
 
   type User = {
+    accessKey?: string;
     createTime?: string;
     gender?: number;
     id?: string;
     isDelete?: number;
     password?: string;
     role?: number;
+    secretKey?: string;
     status?: number;
     updateTime?: string;
     userAccount?: string;
@@ -259,11 +312,17 @@ declare namespace API {
 
   type UserAddRequest = {
     id?: string;
+    isDelete?: number;
     password?: string;
     role?: number;
     userAccount?: string;
     userAvatar?: string;
     userName?: string;
+  };
+
+  type UserCredentialsVO = {
+    accessKey?: string;
+    secretKey?: string;
   };
 
   type UserEditRequest = {
@@ -272,12 +331,7 @@ declare namespace API {
     userName?: string;
   };
 
-  type UserLoginRequest = {
-    userAccount?: string;
-    userPassword?: string;
-  };
-
-  type UserQueryRequest = {
+  type userListUsingGET1Params = {
     createTime?: string;
     current?: string;
     gender?: number;
@@ -291,6 +345,27 @@ declare namespace API {
     updateTime?: string;
     userAccount?: string;
     userName?: string;
+  };
+
+  type userListUsingGETParams = {
+    createTime?: string;
+    current?: string;
+    gender?: number;
+    id?: string;
+    isDelete?: number;
+    pageSize?: string;
+    role?: number;
+    sortField?: string;
+    sortOrder?: string;
+    status?: number;
+    updateTime?: string;
+    userAccount?: string;
+    userName?: string;
+  };
+
+  type UserLoginRequest = {
+    userAccount?: string;
+    userPassword?: string;
   };
 
   type UserRegisterRequest = {

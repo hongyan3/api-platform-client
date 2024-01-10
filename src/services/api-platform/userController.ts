@@ -2,39 +2,27 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** addUser POST /api/user/add */
-export async function addUserUsingPost(body: API.UserAddRequest, options?: { [key: string]: any }) {
-  return request<API.BaseResponselong>('/api/user/add', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** deleteUser DELETE /api/user/delete */
-export async function deleteUserUsingDelete(
-  body: API.DeleteRequest,
+/** userList GET /api/user */
+export async function userListUsingGet1(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.userListUsingGET1Params,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/api/user/delete', {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
+  return request<API.BaseResponsePageUserVO>('/api/user', {
+    method: 'GET',
+    params: {
+      ...params,
     },
-    data: body,
     ...(options || {}),
   });
 }
 
-/** updateMyUser PUT /api/user/edit */
-export async function updateMyUserUsingPut(
+/** updateUser PUT /api/user */
+export async function updateUserUsingPut1(
   body: API.UserEditRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseboolean>('/api/user/edit', {
+  return request<API.BaseResponseboolean>('/api/user', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -44,39 +32,26 @@ export async function updateMyUserUsingPut(
   });
 }
 
-/** getUserById GET /api/user/get/${param0} */
-export async function getUserByIdUsingGet(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getUserByIdUsingGETParams,
-  options?: { [key: string]: any },
-) {
-  const { id: param0, ...queryParams } = params;
-  return request<API.BaseResponseUser>(`/api/user/get/${param0}`, {
-    method: 'GET',
-    params: { ...queryParams },
-    ...(options || {}),
-  });
-}
-
-/** getLoginUser GET /api/user/get/login */
-export async function getLoginUserUsingGet(options?: { [key: string]: any }) {
-  return request<API.BaseResponseUserVO>('/api/user/get/login', {
+/** getCredentials GET /api/user/credentials */
+export async function getCredentialsUsingGet(options?: { [key: string]: any }) {
+  return request<API.BaseResponseUserCredentialsVO>('/api/user/credentials', {
     method: 'GET',
     ...(options || {}),
   });
 }
 
-/** listUserByPage POST /api/user/list/page */
-export async function listUserByPageUsingPost(
-  body: API.UserQueryRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponsePageUser>('/api/user/list/page', {
+/** refreshCredentials POST /api/user/credentials/refresh */
+export async function refreshCredentialsUsingPost(options?: { [key: string]: any }) {
+  return request<API.BaseResponseUserCredentialsVO>('/api/user/credentials/refresh', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
+    ...(options || {}),
+  });
+}
+
+/** getLoginUser GET /api/user/login */
+export async function getLoginUserUsingGet(options?: { [key: string]: any }) {
+  return request<API.BaseResponseUserVO>('/api/user/login', {
+    method: 'GET',
     ...(options || {}),
   });
 }
@@ -111,21 +86,6 @@ export async function userRegisterUsingPost(
 ) {
   return request<API.BaseResponselong>('/api/user/register', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** updateUser PUT /api/user/update */
-export async function updateUserUsingPut(
-  body: API.UserUpdateRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponseboolean>('/api/user/update', {
-    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },

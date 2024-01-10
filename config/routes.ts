@@ -12,6 +12,19 @@
  */
 export default [
   {
+    path: '/index',
+    name: '首页',
+    icon: 'smile',
+    component: './Index',
+  },
+  {
+    path: '/interface_info/:id',
+    name: '接口文档',
+    icon: 'smile',
+    component: './InterfaceInfo',
+    hideInMenu: true
+  },
+  {
     path: '/user',
     layout: false,
     routes: [
@@ -21,12 +34,6 @@ export default [
         component: './User/Login',
       },
     ],
-  },
-  {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
   },
   {
     path: '/admin',
@@ -42,13 +49,13 @@ export default [
         name: '接口列表',
         icon: 'table',
         path: '/admin/interface_info',
-        component: './InterfaceInfoList',
+        component: './Admin/InterfaceInfoList',
       },
     ],
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/index',
   },
   {
     path: '*',

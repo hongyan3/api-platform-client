@@ -1,9 +1,11 @@
 import {
   addInterfaceInfoUsingPost,
-  deleteInterfaceInfoUsingPost,
-  listInterfaceInfoVoByPageUsingPost,
-  updateInterfaceInfoUsingPost,
-} from '@/services/api-platform/interfaceInfoController';
+  deleteInterfaceInfoUsingDelete,
+  getInterfaceInfoListUsingGet,
+  offlineInterfaceInfoUsingPut,
+  onlineInterfaceInfoUsingPut,
+  updateInterfaceInfoUsingPut,
+} from '@/services/api-platform/interfaceInfoAdminController';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import {
@@ -55,6 +57,7 @@ const InterfaceInfoList: React.FC = () => {
       await addInterfaceInfoUsingPost({ ...fields });
       hide();
       message.success('创建成功');
+      actionRef.current?.reload();
       handleModalOpen(false);
       return true;
     } catch (error: any) {
@@ -73,7 +76,7 @@ const InterfaceInfoList: React.FC = () => {
   const handleUpdate = async (fields: API.InterfaceInfoUpdateRequest) => {
     const hide = message.loading('Configuring');
     try {
-      await updateInterfaceInfoUsingPost({
+      await updateInterfaceInfoUsingPut({
         ...fields,
       });
       hide();
@@ -97,8 +100,8 @@ const InterfaceInfoList: React.FC = () => {
     const hide = message.loading('正在删除');
     if (!record) return true;
     try {
-      await deleteInterfaceInfoUsingPost({
-        id: record.id,
+      await deleteInterfaceInfoUsingDelete({
+        interfaceId: record.id,
       });
       hide();
       message.success('删除成功');
@@ -107,6 +110,52 @@ const InterfaceInfoList: React.FC = () => {
     } catch (error) {
       hide();
       message.error('删除失败,' + error);
+      return false;
+    }
+  };
+  /**
+   *  Delete node
+   * @zh-CN 发布节点
+   *
+   * @param selectedRows
+   */
+  const handleOnline = async (record: API.InterfaceInfoVO) => {
+    const hide = message.loading('正在执行');
+    if (!record) return true;
+    try {
+      await onlineInterfaceInfoUsingPut({
+        interfaceId: record.id,
+      });
+      hide();
+      message.success('发布成功');
+      actionRef.current?.reload();
+      return true;
+    } catch (error) {
+      hide();
+      message.error('发布失败,' + error);
+      return false;
+    }
+  };
+  /**
+   *  Delete node
+   * @zh-CN 下线节点
+   *
+   * @param selectedRows
+   */
+  const handleOffline = async (record: API.InterfaceInfoVO) => {
+    const hide = message.loading('正在执行');
+    if (!record) return true;
+    try {
+      await offlineInterfaceInfoUsingPut({
+        interfaceId: record.id,
+      });
+      hide();
+      message.success('下线成功');
+      actionRef.current?.reload();
+      return true;
+    } catch (error) {
+      hide();
+      message.error('下线失败,' + error);
       return false;
     }
   };
@@ -150,7 +199,7 @@ const InterfaceInfoList: React.FC = () => {
     },
     {
       title: '请求参数',
-      dataIndex: 'requestPparams',
+      dataIndex: 'requestParams',
       valueType: 'textarea',
     },
     {
@@ -209,14 +258,35 @@ const InterfaceInfoList: React.FC = () => {
         >
           修改
         </a>,
-        <a
+        record.status === 0 ? (
+          <a
+            key="config"
+            onClick={() => {
+              handleOnline(record);
+            }}
+          >
+            发布
+          </a>
+        ) : (
+          <a
+            key="config"
+            onClick={() => {
+              handleOffline(record);
+            }}
+          >
+            下线
+          </a>
+        ),
+        <Button
+          type="text"
           key="config"
+          danger
           onClick={() => {
             handleRemove(record);
           }}
         >
           删除
-        </a>,
+        </Button>,
       ],
     },
   ];
@@ -248,7 +318,7 @@ const InterfaceInfoList: React.FC = () => {
         request={async (
           // 第一个参数 params 查询表单和 params 参数的结合
           // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范
-          params: API.InterfaceInfoQueryRequest & {
+          params: API.getInterfaceInfoListUsingGETParams & {
             pageSize: number;
             current: number;
           },
@@ -257,7 +327,7 @@ const InterfaceInfoList: React.FC = () => {
         ) => {
           // 这里需要返回一个 Promise,在返回之前你可以进行数据转化
           // 如果需要转化参数可以在这里进行修改
-          const res = await listInterfaceInfoVoByPageUsingPost({
+          const res = await getInterfaceInfoListUsingGet({
             ...params,
           });
           return {
