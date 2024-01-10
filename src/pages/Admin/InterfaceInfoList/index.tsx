@@ -159,7 +159,6 @@ const InterfaceInfoList: React.FC = () => {
       return false;
     }
   };
-
   const columns: ProColumns<API.InterfaceInfoVO>[] = [
     {
       title: '接口ID',
