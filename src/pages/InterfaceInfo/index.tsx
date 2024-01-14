@@ -14,7 +14,7 @@ const InterfaceDoc: React.FC = () => {
   const [invokeLoading, setInvokeLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const params = useParams();
-  const [form] = Form.useForm()
+  const [form] = Form.useForm();
   useEffect(() => {
     async function fetchData() {
       if (!params.id) {
@@ -27,7 +27,8 @@ const InterfaceDoc: React.FC = () => {
           interfaceId: params.id,
         });
         setData(res.data);
-        form.setFieldValue("requestParams",res.data?.requestParams)
+        form.setFieldValue('requestParams', res.data?.requestParams);
+        form.setFieldValue('requestHeader', res.data?.requestHeader);
       } catch (error: any) {
         message.error('请求失败' + error.message);
         return;
@@ -68,8 +69,8 @@ const InterfaceDoc: React.FC = () => {
             请求方法：<Tag color="blue">{data?.method}</Tag>
           </div>
           <div>请求参数：{data?.requestParams}</div>
-          <div>请求头：{data?.requestHeader}</div>
-          <div>响应头：{data?.responseHeader}</div>
+          <div>请求头部：{data?.requestHeader}</div>
+          <div>响应头部：{data?.responseHeader}</div>
           <div>创建时间：{data?.createTime}</div>
           <div>更新时间：{data?.updateTime}</div>
         </ProCard>
@@ -80,6 +81,9 @@ const InterfaceDoc: React.FC = () => {
               onFinsh(values);
             }}
           >
+            <Form.Item label="请求头部" name="requestHeader">
+              <Input.TextArea autoSize></Input.TextArea>
+            </Form.Item>
             <Form.Item label="请求参数" name="requestParams">
               <Input.TextArea autoSize></Input.TextArea>
             </Form.Item>

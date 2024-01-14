@@ -1,15 +1,15 @@
 import { outLogin } from '@/services/ant-design-pro/api';
+import { userLogoutUsingPost } from '@/services/api-platform/userController';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
 import { Spin } from 'antd';
+import { message } from 'antd/lib';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import React, { useCallback } from 'react';
 import { flushSync } from 'react-dom';
 import HeaderDropdown from '../HeaderDropdown';
-import { userLogoutUsingPost } from '@/services/api-platform/userController';
-import { message } from 'antd/lib';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -67,8 +67,8 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
           setInitialState((s) => ({ ...s, currentUser: undefined }));
         });
         userLogoutUsingPost();
-        message.success({content: '退出登陆成功'})
-        history.push('/user/login')
+        message.success({ content: '退出登陆成功' });
+        history.push('/user/login');
         return;
       }
       history.push(`/account/${key}`);
@@ -116,6 +116,11 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
           },
         ]
       : []),
+    {
+      key: 'center',
+      icon: <UserOutlined />,
+      label: '个人中心',
+    },
     {
       key: 'logout',
       icon: <LogoutOutlined />,

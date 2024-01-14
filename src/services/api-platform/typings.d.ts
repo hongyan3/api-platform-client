@@ -29,6 +29,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponsePageUserInterfaceInfoVO = {
+    code?: number;
+    data?: PageUserInterfaceInfoVO;
+    message?: string;
+  };
+
   type BaseResponsePageUserVO = {
     code?: number;
     data?: PageUserVO;
@@ -60,6 +66,11 @@ declare namespace API {
   };
 
   type deleteInterfaceInfoUsingDELETEParams = {
+    /** interfaceId */
+    interfaceId: string;
+  };
+
+  type deleteUserInterfaceInfoUsingDELETEParams = {
     /** interfaceId */
     interfaceId: string;
   };
@@ -113,9 +124,23 @@ declare namespace API {
     userId: string;
   };
 
+  type getUserInterfaceInfoListUsingGETParams = {
+    createTime?: string;
+    current?: string;
+    id?: string;
+    interfaceInfoId?: string;
+    leftNum?: number;
+    pageSize?: string;
+    sortField?: string;
+    sortOrder?: string;
+    status?: number;
+    total?: number;
+    updateTime?: string;
+    userId?: string;
+  };
+
   type InterfaceInfoAddRequest = {
     description?: string;
-    id?: string;
     method?: string;
     name?: string;
     requestHeader?: string;
@@ -277,6 +302,19 @@ declare namespace API {
     total?: string;
   };
 
+  type PageUserInterfaceInfoVO = {
+    countId?: string;
+    current?: string;
+    maxLimit?: string;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: string;
+    records?: UserInterfaceInfoVO[];
+    searchCount?: boolean;
+    size?: string;
+    total?: string;
+  };
+
   type PageUserVO = {
     countId?: string;
     current?: string;
@@ -329,6 +367,32 @@ declare namespace API {
     gender?: number;
     userAvatar?: string;
     userName?: string;
+  };
+
+  type UserInterfaceInfoAddRequest = {
+    interfaceInfoId?: string;
+    leftNum?: number;
+    status?: number;
+    userId?: string;
+  };
+
+  type UserInterfaceInfoUpdateRequest = {
+    id?: string;
+    interfaceInfoId?: string;
+    leftNum?: number;
+    status?: number;
+    userId?: string;
+  };
+
+  type UserInterfaceInfoVO = {
+    createTime?: string;
+    id?: string;
+    interfaceInfoId?: string;
+    leftNum?: number;
+    status?: number;
+    total?: number;
+    updateTime?: string;
+    userId?: string;
   };
 
   type userListUsingGET1Params = {

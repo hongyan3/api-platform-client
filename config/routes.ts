@@ -25,6 +25,13 @@ export default [
     hideInMenu: true
   },
   {
+    path: '/account/center',
+    name: '个人中心',
+    icon: 'smile',
+    component: './Center',
+    hideInMenu: true
+  },
+  {
     path: '/user',
     layout: false,
     routes: [
@@ -32,7 +39,7 @@ export default [
         name: 'login',
         path: '/user/login',
         component: './User/Login',
-      },
+      }, 
     ],
   },
   {

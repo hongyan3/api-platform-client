@@ -8,6 +8,7 @@ import * as interfaceInfoAdminController from './interfaceInfoAdminController';
 import * as interfaceInfoController from './interfaceInfoController';
 import * as userAdminController from './userAdminController';
 import * as userController from './userController';
+import * as userInterfaceInfoAdminController from './userInterfaceInfoAdminController';
 export default {
   basicErrorController,
   fileController,
@@ -15,4 +16,5 @@ export default {
   interfaceInfoController,
   userAdminController,
   userController,
+  userInterfaceInfoAdminController,
 };
