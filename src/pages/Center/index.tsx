@@ -141,7 +141,7 @@ const Center: React.FC = () => {
             ACCESS_KEY: *************
           </Paragraph>
           <Paragraph copyable={{ text: credentials?.secretKey }} strong>
-            ACCESS_KEY: *************
+            SECRET_KEY: *************
           </Paragraph>
         </ProCard>
       </ProCard>
