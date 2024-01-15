@@ -152,6 +152,7 @@ declare namespace API {
 
   type InterfaceInfoInvokeRequest = {
     id?: string;
+    requestHeader?: string;
     requestParams?: string;
   };
 
@@ -326,10 +327,6 @@ declare namespace API {
     searchCount?: boolean;
     size?: string;
     total?: string;
-  };
-
-  type UploadFileUsingPOSTParams = {
-    business?: string;
   };
 
   type User = {

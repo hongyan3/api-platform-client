@@ -79,7 +79,7 @@ export async function userLogoutUsingPost(options?: { [key: string]: any }) {
   });
 }
 
-/** userRegister POST /api/user/register */
+/** 用户注册 POST /api/user/register */
 export async function userRegisterUsingPost(
   body: API.UserRegisterRequest,
   options?: { [key: string]: any },
