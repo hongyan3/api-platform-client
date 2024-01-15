@@ -1,5 +1,10 @@
 import { uploadFileUsingPost } from '@/services/api-platform/fileController';
-import { getLoginUserUsingGet, updateUserUsingPut1 } from '@/services/api-platform/userController';
+import {
+  getCredentialsUsingGet,
+  getLoginUserUsingGet,
+  refreshCredentialsUsingPost,
+  updateUserUsingPut1,
+} from '@/services/api-platform/userController';
 import {
   PageContainer,
   ProCard,
@@ -8,9 +13,35 @@ import {
   ProFormText,
   ProFormUploadButton,
 } from '@ant-design/pro-components';
-import { message } from 'antd';
-import React from 'react';
+import { Button, message } from 'antd';
+import Paragraph from 'antd/es/typography/Paragraph';
+import React, { useEffect, useState } from 'react';
 const Center: React.FC = () => {
+  const [credentials, setCredentials] = useState<API.UserCredentialsVO>();
+  useEffect(() => {
+    async function fetchCredentials() {
+      try {
+        const res = await getCredentialsUsingGet();
+        if (res.data) {
+          setCredentials(res.data);
+        }
+      } catch (error: any) {
+        message.error('获取密钥失败, ' + error.message);
+      }
+    }
+    fetchCredentials();
+  }, []);
+  const refreshCredentials = async () => {
+    try {
+      const res = await refreshCredentialsUsingPost();
+      if (res.data) {
+        setCredentials(res.data);
+        message.success('刷新成功');
+      }
+    } catch (error: any) {
+      message.error('刷新密钥失败, ' + error.message);
+    }
+  };
   return (
     <PageContainer>
       <ProCard headerBordered direction="column" gutter={[0, 16]} style={{ marginBlockStart: 8 }}>
@@ -26,7 +57,7 @@ const Center: React.FC = () => {
                     name: 'user_avatar',
                     uid: '0',
                     url: res.data?.userAvatar,
-                    response: ''
+                    response: '',
                   },
                 ],
                 gender: res.data?.gender,
@@ -100,7 +131,19 @@ const Center: React.FC = () => {
             />
           </ProForm>
         </ProCard>
-        <ProCard type="inner" title="密钥管理" bordered></ProCard>
+        <ProCard
+          type="inner"
+          title="密钥管理"
+          bordered
+          extra={<Button onClick={refreshCredentials}>刷新密钥</Button>}
+        >
+          <Paragraph copyable={{ text: credentials?.accessKey }} strong>
+            ACCESS_KEY: *************
+          </Paragraph>
+          <Paragraph copyable={{ text: credentials?.secretKey }} strong>
+            ACCESS_KEY: *************
+          </Paragraph>
+        </ProCard>
       </ProCard>
     </PageContainer>
   );
