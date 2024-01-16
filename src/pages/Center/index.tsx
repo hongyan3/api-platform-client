@@ -13,11 +13,12 @@ import {
   ProFormText,
   ProFormUploadButton,
 } from '@ant-design/pro-components';
-import { Button, message } from 'antd';
+import { Button, Modal, message } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
 import React, { useEffect, useState } from 'react';
 const Center: React.FC = () => {
   const [credentials, setCredentials] = useState<API.UserCredentialsVO>();
+  const [isModalOpen,setIsModalOPen] = useState<boolean>()
   useEffect(() => {
     async function fetchCredentials() {
       try {
@@ -37,6 +38,7 @@ const Center: React.FC = () => {
       if (res.data) {
         setCredentials(res.data);
         message.success('刷新成功');
+        setIsModalOPen(false)
       }
     } catch (error: any) {
       message.error('刷新密钥失败, ' + error.message);
@@ -44,6 +46,9 @@ const Center: React.FC = () => {
   };
   return (
     <PageContainer>
+      <Modal title="警告" open={isModalOpen} onOk={() => {refreshCredentials()}} onCancel={() => {setIsModalOPen(false)}}>
+        <Paragraph>这将导致当前密钥失效，确定进行此操作吗？</Paragraph>
+      </Modal>
       <ProCard headerBordered direction="column" gutter={[0, 16]} style={{ marginBlockStart: 8 }}>
         <ProCard type="inner" title="资料管理" bordered>
           <ProForm
@@ -135,7 +140,7 @@ const Center: React.FC = () => {
           type="inner"
           title="密钥管理"
           bordered
-          extra={<Button onClick={refreshCredentials}>刷新密钥</Button>}
+          extra={<Button onClick={() => {setIsModalOPen(true)}}>刷新密钥</Button>}
         >
           <Paragraph copyable={{ text: credentials?.accessKey }} strong>
             ACCESS_KEY: *************
